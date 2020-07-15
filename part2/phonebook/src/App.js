@@ -12,6 +12,11 @@ const App = () => {
       name: newName,
       key: newName
     }
+
+    if (persons.filter(person => person.name === newPerson.name).length > 0) {
+      alert(`{person.name} is already in phonebook`)
+    }
+
     setPersons([...persons, newPerson])
     setNewName('')
   }
