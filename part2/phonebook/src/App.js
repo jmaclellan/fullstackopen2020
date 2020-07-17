@@ -22,6 +22,7 @@ const App = () => {
 
     setPersons([...persons, newPerson])
     setNewName('')
+    setNewNumber('')
   }
 
   const handleNameChange = e => {
