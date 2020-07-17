@@ -15,6 +15,7 @@ const App = () => {
       key: newName
     }
 
+    // check if name already exists
     if (persons.filter(person => person.name === newPerson.name).length > 0) {
       alert(`{person.name} is already in phonebook`)
     }
