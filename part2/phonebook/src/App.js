@@ -15,9 +15,12 @@ const App = () => {
       key: newName
     }
 
-    // check if name already exists
+    // prevent user adding name that already exists
     if (persons.filter(person => person.name === newPerson.name).length > 0) {
-      alert(`{person.name} is already in phonebook`)
+      alert(`${newPerson.name} is already in phonebook`)
+      setNewName('')
+      setNewNumber('')
+      return
     }
 
     setPersons([...persons, newPerson])
