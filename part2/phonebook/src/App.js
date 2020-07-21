@@ -28,6 +28,7 @@ const App = () => {
     }
 
     setPersons([...persons, newPerson])
+    // reset form
     setNewName('')
     setNewNumber('')
   }
@@ -40,6 +41,10 @@ const App = () => {
     setNewNumber(e.target.value)
   }
 
+  const handleFilterChange = e => {
+    setFilter(e.target.value)
+  }
+
   const display = persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
 
   return (
@@ -48,7 +53,7 @@ const App = () => {
       <form>
         filter shown with: <input
           value={filter}
-          onChange={(e) => setFilter(e.target.value)}
+          onChange={handleFilterChange}
         />
       </form>
       <h2>add a new</h2>
