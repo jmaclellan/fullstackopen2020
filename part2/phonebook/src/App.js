@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Person from './components/Person'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -45,6 +46,7 @@ const App = () => {
     setFilter(e.target.value)
   }
 
+  // only display people who match filter state
   const display = persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
 
   return (
@@ -70,9 +72,7 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       {display.map(person =>
-        <div key={person.number}>
-          {person.name} {person.number}
-        </div>
+        <Person name={person.name} number={person.number} key={person.number} />
       )}
     </div>
   )
