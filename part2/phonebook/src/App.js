@@ -2,10 +2,14 @@ import React, { useState } from 'react'
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '123-456-7890' }
+    { name: 'Arto Hellas', number: '040-123456' },
+    { name: 'Ada Lovelace', number: '39-44-5323523' },
+    { name: 'Dan Abramov', number: '12-43-234345' },
+    { name: 'Mary Poppendieck', number: '39-23-6423122' }
   ])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [filter, setFilter] = useState('')
 
   const addPerson = e => {
     e.preventDefault()
@@ -36,10 +40,17 @@ const App = () => {
     setNewNumber(e.target.value)
   }
 
+  const display = persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
+
   return (
     <div>
       <h1>Phonebook</h1>
-      {/* <div>filter shown with <input value={} onChange={} /></div> */}
+      <form>
+        filter shown with: <input
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+        />
+      </form>
       <h2>add a new</h2>
       <form onSubmit={addPerson}>
         <div>
@@ -53,8 +64,8 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      {persons.map(person =>
-        <div key={person.key}>
+      {display.map(person =>
+        <div key={person.number}>
           {person.name} {person.number}
         </div>
       )}
