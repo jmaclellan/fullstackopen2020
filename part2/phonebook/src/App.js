@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import Person from './components/Person'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
@@ -13,35 +12,37 @@ const App = () => {
   const [filter, setFilter] = useState('')
 
   useEffect(() => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
+    personService
+      .getAll()
+      .then(initialPersons => {
+        setPersons(initialPersons)
       })
-  }, [])
+  }, [persons])
 
   const addPerson = e => {
     e.preventDefault()
-    const newPerson = {
+    const personObject = {
       name: newName,
       number: newNumber,
       key: newName
     }
 
     // prevent user adding name that already exists
-    if (persons.filter(person => person.name === newPerson.name).length > 0) {
-      alert(`${newPerson.name} is already in phonebook`)
+    if (persons.filter(person => person.name === personObject.name).length > 0) {
+      alert(`${personObject.name} is already in phonebook`)
       setNewName('')
       setNewNumber('')
       return
     }
 
-    setPersons([...persons, newPerson])
-    // reset form
-    setNewName('')
-    setNewNumber('')
+    personService
+      .create(personObject)
+      .then(returnedPerson => {
+        setPersons([...persons, returnedPerson])
+        // reset form
+        setNewName('')
+        setNewNumber('')
+      })
   }
 
   const handleNameChange = e => {
@@ -54,6 +55,10 @@ const App = () => {
 
   const handleFilterChange = e => {
     setFilter(e.target.value)
+  }
+
+  const handleDeletePerson = e => {
+    setPersons(persons.filter(person => person.name !== e.target.value.name))
   }
 
   // only display people who match filter state
@@ -73,7 +78,12 @@ const App = () => {
       />
       <h2>Numbers</h2>
       {display.map(person =>
-        <Person name={person.name} number={person.number} key={person.number} />
+        <Person
+          name={person.name}
+          number={person.number}
+          key={person.number}
+          handleDeletePerson={handleDeletePerson}
+        />
       )}
     </div>
   )
