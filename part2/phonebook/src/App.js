@@ -17,7 +17,7 @@ const App = () => {
       .then(initialPersons => {
         setPersons(initialPersons)
       })
-  }, [persons])
+  }, [])
 
   const addPerson = e => {
     e.preventDefault()
@@ -57,8 +57,8 @@ const App = () => {
     setFilter(e.target.value)
   }
 
-  const handleDeletePerson = e => {
-    setPersons(persons.filter(person => person.name !== e.target.value.name))
+  const handleDeletePerson = number => {
+    setPersons(persons.filter(person => person.number !== number))
   }
 
   // only display people who match filter state
