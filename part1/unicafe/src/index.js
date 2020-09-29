@@ -12,7 +12,7 @@ const Statistic = ({ text, value }) => <div>{text} {value}</div>
 const Statistics = ({ good, neutral, bad }) => {
   let all = good + neutral + bad
   let average = ((good * 1) + (bad * -1)) / all
-  let positive = good / all
+  let positive = `${(good / all) * 100} %`
 
   if (all === 0) return (
     <>
