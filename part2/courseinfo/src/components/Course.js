@@ -4,6 +4,7 @@ import Header from "./Header";
 
 const Course = ({ courses }) => (
   <>
+    <h1>Web development curriculum</h1>
     {courses.map((course) =>
       <div key={course.name}>
         <Header course={course} />
