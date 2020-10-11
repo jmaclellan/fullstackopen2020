@@ -53,25 +53,15 @@ const App = () => {
     }, 5000)
   }
 
-  const handleNameChange = e => {
-    setNewName(e.target.value)
-  }
-
-  const handleNumberChange = e => {
-    setNewNumber(e.target.value)
-    // change message
-    setChangeMessage(`Changed ${persons.name}'s number`)
-    setTimeout(() => {
-      setChangeMessage(null)
-    }, 5000)
-  }
-
   const handleFilterChange = e => {
     setFilter(e.target.value)
   }
 
-  const handleDeletePerson = number => {
-    setPersons(persons.filter(person => person.number !== number))
+  // delete 2.17
+  const handleDeletePerson = (id, key) => {
+    if (window.confirm(`Delete ${key}?`)) {
+      personService.deleteContact(id)
+    }
   }
 
   // only display people who match filter state
@@ -86,16 +76,14 @@ const App = () => {
       <PersonForm
         addPerson={addPerson}
         newName={newName}
-        handleNameChange={handleNameChange}
         newNumber={newNumber}
-        handleNumberChange={handleNumberChange}
       />
       <h2>Numbers</h2>
       {display.map(person =>
         <Person
           name={person.name}
           number={person.number}
-          key={person.number}
+          person={person}
           handleDeletePerson={handleDeletePerson}
         />
       )}
