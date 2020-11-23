@@ -58,9 +58,10 @@ const App = () => {
   }
 
   // delete 2.17
-  const handleDeletePerson = (id, key) => {
-    if (window.confirm(`Delete ${key}?`)) {
-      personService.deleteContact(id)
+  const handleDelete = (person) => {
+    if (window.confirm(`Delete ${person.name}?`)) {
+      personService.deleteContact(person.id)
+        .then(response = response.data)
     }
   }
 
@@ -84,7 +85,7 @@ const App = () => {
           name={person.name}
           number={person.number}
           person={person}
-          handleDeletePerson={handleDeletePerson}
+          handleDelete={handleDelete}
         />
       )}
     </div>
