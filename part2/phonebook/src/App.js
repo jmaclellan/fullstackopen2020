@@ -58,11 +58,9 @@ const App = () => {
   }
 
   // delete 2.17
-  const handleDelete = (person) => {
-    if (window.confirm(`Delete ${person.name}?`)) {
+  const handleDelete = () => {
       personService.deleteContact(person.id)
-        .then(response = response.data)
-    }
+        .then(response => response.data)
   }
 
   // only display people who match filter state

@@ -16,8 +16,8 @@ const update = (id, newObject) => {
   return request.then(response => response.data)
 }
 
-const deleteContact = person => {
-  axios.delete(`${baseUrl}/${person.id}`)
+const deleteContact = id => {
+  axios.delete(`${baseUrl}/${id}`)
 }
 
 export default {
