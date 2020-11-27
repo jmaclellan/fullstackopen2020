@@ -58,8 +58,8 @@ const App = () => {
   }
 
   // delete 2.17
-  const handleDelete = () => {
-      personService.deleteContact(person.id)
+  const handleDelete = id => {
+      personService.deleteContact(id)
         .then(response => response.data)
   }
 
