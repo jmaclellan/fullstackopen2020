@@ -67,8 +67,13 @@ const App = () => {
 
   // delete item, then update displayed names
   const handleDelete = id => {
-      personService.deleteContact(id)
-      setPersons(persons.map(person => person.id !== id))
+    const person = persons.find(p => p.id === id)
+    if (window.confirm(`Delete ${person.name}?`)) {
+     personService.deleteContact(id).then(() => {
+        // filter out deleted person
+        setPersons(persons.filter(p => p.id !== id))
+     })
+    }
   }
 
   // only display people who match filter state
@@ -78,7 +83,10 @@ const App = () => {
     <div>
       <h1>Phonebook</h1>
       <Notification message={changeMessage} />
-      <Filter filter={filter} handleFilterChange={handleFilterChange} />
+      <Filter
+        filter={filter}
+        handleFilterChange={handleFilterChange}
+      />
       <h2>add a new</h2>
       <PersonForm
         addPerson={addPerson}
