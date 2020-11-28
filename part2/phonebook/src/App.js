@@ -70,7 +70,6 @@ const App = () => {
     const person = persons.find(p => p.id === id)
     if (window.confirm(`Delete ${person.name}?`)) {
      personService.deleteContact(id).then(() => {
-        // filter out deleted person from list
         setPersons(persons.filter(p => p.id !== id))
      })
     }
