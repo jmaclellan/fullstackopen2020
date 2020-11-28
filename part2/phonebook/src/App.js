@@ -57,10 +57,18 @@ const App = () => {
     setFilter(e.target.value)
   }
 
-  // delete 2.17
+  const handleNameChange = e => {
+    setNewName(e.target.value)
+  }
+
+  const handleNumberChange = e => {
+    setNewNumber(e.target.value)
+  }
+
+  // delete item, then update displayed names
   const handleDelete = id => {
       personService.deleteContact(id)
-        .then(response => response.data)
+      setPersons(persons.map(person => person.id !== id))
   }
 
   // only display people who match filter state
@@ -76,6 +84,8 @@ const App = () => {
         addPerson={addPerson}
         newName={newName}
         newNumber={newNumber}
+        handleNameChange={handleNameChange}
+        handleNumberChange={handleNumberChange}
       />
       <h2>Numbers</h2>
       {display.map(person =>
