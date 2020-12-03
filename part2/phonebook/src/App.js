@@ -98,6 +98,7 @@ const App = () => {
       {display.map(person =>
         <Person
           name={person.name}
+          key={person.name}
           number={person.number}
           person={person}
           handleDelete={handleDelete}
