@@ -30,7 +30,7 @@ const App = () => {
     }
 
     // prevent user adding name that already exists
-    if (persons.find(person => person.name === personObject.name) {
+    if (persons.find(person => person.name === personObject.name)) {
       alert(`${personObject.name} is already in phonebook`)
       setNewName('')
       setNewNumber('')
