@@ -1,11 +1,10 @@
 const http = require('http')
 const express = require('express')
 
-const app = express()
 const cors = require('cors')
+const app = require('./app') // actual Express app
 
-app.use(cors())
-app.use(express.json())
+const server = http.createServer(app)
 
 const PORT = 3003
 app.listen(PORT, () => {
