@@ -20,7 +20,7 @@ beforeEach(async () => {
 test('get correct number of blogs', async () => {
   const response = await api.get('/api/blogs')
 
-  expect(response.body.length).toBe(helper.initialBlogs.length)
+  expect(response.body.length).toHaveLength(helper.initialBlogs.length)
 })
 
 afterAll(() => {
