@@ -1,4 +1,21 @@
-const dummy = blogs => 1
+const Blog = require('../models/blog')
+
+const dummy = () => 1
+
+const initialBlogs = [
+  {
+    title: 'test blog 1',
+    author: 'joe schmoe',
+    url: 'website.com',
+    likes: 3,
+  },
+  {
+    title: 'test blog 2',
+    author: 'jack johnson',
+    url: 'random.com',
+    likes: 5,
+  },
+]
 
 const totalLikes = blogs => {
   let likes = 0
@@ -9,4 +26,4 @@ const totalLikes = blogs => {
   return likes
 }
 
-module.exports = { dummy, totalLikes }
+module.exports = { dummy, totalLikes, initialBlogs }
