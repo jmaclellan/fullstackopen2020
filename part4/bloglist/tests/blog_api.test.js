@@ -7,7 +7,7 @@ const api = supertest(app)
 test('get correct number of blogs', async () => {
   const response = await api.get('/api/blogs')
 
-  expect(response.body).toHaveLength(0)
+  expect(response.body).toStrictEqual({})
 })
 
 afterAll(() => {
