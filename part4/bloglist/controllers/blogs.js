@@ -3,7 +3,7 @@ const Blog = require('../models/blog')
 
 blogsRouter.get('/', async (request, response) => {
   const blogs = Blog.find({})
-  response.json(blogs)
+  response.json(blogs.map(map => map.toJSON()))
 })
 
 blogsRouter.post('/', async (request, response, next) => {
@@ -18,7 +18,7 @@ blogsRouter.post('/', async (request, response, next) => {
 
   try {
     const savedBlog = await blog.save()
-    response.json(savedBlog)
+    response.json(savedBlog.toJSON())
   } catch (error) {
     next(error)
   }
