@@ -15,10 +15,12 @@ beforeEach(async () => {
   await Promise.all(promiseArray)
 })
 
-test('get correct number of blogs', async () => {
-  const response = await api.get('/api/blogs')
+describe('when there is initially some blogs save', () => {
+  test('get correct number of blogs', async () => {
+    const response = await api.get('/api/blogs')
 
-  expect(response.body.length).toHaveLength(helper.initialBlogs.length)
+    expect(response.body).toHaveLength(helper.initialBlogs.length)
+  })
 })
 
 afterAll(() => {
