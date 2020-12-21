@@ -23,6 +23,26 @@ describe('when there is initially some blogs save', () => {
   })
 })
 
+describe('addition of a new blog', () => {
+  test('succeed with valid data', async () => {
+    const newBlog = {
+      title: 'test blog 1',
+      author: 'joe schmoe',
+      url: 'website.com',
+      likes: 3,
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+
+    const blogsAtEnd = await helper.notesInDb()
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
+  })
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
