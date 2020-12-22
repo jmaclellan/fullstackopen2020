@@ -19,6 +19,7 @@ const initialBlogs = [
 
 const totalLikes = blogs => {
   let likes = 0
+  // eslint-disable-next-line no-plusplus
   for (let i = 0; i < blogs.length; i++) {
     const current = blogs[i]
     likes += current.likes
