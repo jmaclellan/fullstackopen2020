@@ -18,6 +18,7 @@ beforeEach(async () => {
 describe('when there is initially some blogs save', () => {
   test('get correct number of blogs', async () => {
     const response = await api.get('/api/blogs')
+    debugger
 
     expect(response.body).toHaveLength(helper.initialBlogs.length)
   })
@@ -38,7 +39,7 @@ describe('addition of a new blog', () => {
       .expect(200)
       .expect('Content-Type', /application\/json/)
 
-    const blogsAtEnd = await helper.notesInDb()
+    const blogsAtEnd = await helper.blogsInDb()
     expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
   })
 })
