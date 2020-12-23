@@ -15,10 +15,16 @@ beforeEach(async () => {
   await Promise.all(promiseArray)
 })
 
-describe('when there is initially some blogs save', () => {
+describe('when there are initially some blogs saved', () => {
+  test('blogs are return as json', async () => {
+    await api
+      .get('/api/blogs')
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+  })
+
   test('get correct number of blogs', async () => {
     const response = await api.get('/api/blogs')
-    debugger
 
     expect(response.body).toHaveLength(helper.initialBlogs.length)
   })
