@@ -40,10 +40,11 @@ describe('when there are initially some blogs saved', () => {
 describe('addition of a new blog', () => {
   test('succeed with valid data', async () => {
     const newBlog = {
-      title: 'test blog 1',
-      author: 'joe schmoe',
-      url: 'website.com',
-      likes: 3,
+      title: 'Go To Statement Considered Harmful',
+      author: 'Edsger W. Dijkstra',
+      url:
+        'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+      likes: 5,
     }
 
     await api
