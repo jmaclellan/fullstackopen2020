@@ -31,8 +31,8 @@ describe('when there are initially some blogs saved', () => {
 
   test('verify blog posts have id property', async () => {
     const response = await api.get('/api/blogs')
-    const id = response.body.map(r => r.id)
 
+    const id = response.body.map(r => r.id)
     expect(id).toBeDefined()
   })
 })
