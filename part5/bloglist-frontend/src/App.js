@@ -76,6 +76,7 @@ const App = () => {
 
   const loginForm = () => (
     <form onSubmit={handleLogin}>
+      <h2>Login in to application</h2>
       <div>
         username
           <input
@@ -100,6 +101,7 @@ const App = () => {
 
   const blogForm = () => (
     <form onSubmit={addBlog}>
+      <h2>blogs</h2>
       <input
         value={newBlog}
         onChange={handleBlogChange}
@@ -110,7 +112,6 @@ const App = () => {
 
   return (
     <div>
-      <h2>blogs</h2>
       <Notification message={errorMessage} />
 
       {user === null ?
