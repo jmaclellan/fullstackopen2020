@@ -77,7 +77,7 @@ const App = () => {
   }
 
   const loginForm = () => (
-    <Toggable buttonLabel='login'>
+    <Togglable buttonLabel='login'>
         <LoginForm
           username={username}
           password={password}
@@ -85,7 +85,7 @@ const App = () => {
           handlePasswordChange={({target}) => setPassword(target.value)}
           handleSubmit={handleLogin}
         />
-    </Toggable>
+    </Togglable>
   )
 
   const blogForm = () => (
