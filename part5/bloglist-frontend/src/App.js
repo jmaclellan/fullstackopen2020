@@ -15,6 +15,8 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
+  const blogFormRef = React.createRef()
+
   useEffect(() => {
     blogService
       .getAll()
@@ -32,16 +34,8 @@ const App = () => {
     }
   }, [])
 
-  const addBlog = event => {
-    event.preventDefault()
-    const {url, title, author, likes} = event.body
-    const blogObject = {
-      url,
-      title,
-      author,
-      likes,
-    }
-
+  const addBlog = blogObject => {
+    blogFormRef.current.toggleVisibility()
     blogService
       .create(blogObject)
       .then(returnedBlog => {
@@ -73,10 +67,6 @@ const App = () => {
     }
   }
 
-  const handleBlogChange = (event) => {
-    setNewBlog(event.target.value)
-  }
-
   const loginForm = () => (
     <Togglable buttonLabel='login'>
         <LoginForm
@@ -90,14 +80,9 @@ const App = () => {
   )
 
   const blogForm = () => (
-    <form onSubmit={addBlog}>
-      <h2>blogs</h2>
-      <input
-        value={newBlog}
-        onChange={handleBlogChange}
-      />
-      <button type="submit">save</button>
-    </form>
+    <Togglable buttonLabel='new blog' ref={blogFormRef}>
+      <BlogForm createBlog={addBlog}/>
+    </Togglable>
   )
 
   return (
@@ -111,10 +96,11 @@ const App = () => {
           {blogForm()}
         </div>
       }
-
+      <ul>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
+      </ul>
     </div>
   )
 }
