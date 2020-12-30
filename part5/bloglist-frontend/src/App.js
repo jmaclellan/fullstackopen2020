@@ -58,7 +58,7 @@ const App = () => {
       })
 
       window.localStorage.setItem(
-        'loggedNoteappUser', JSON.stringify(user)
+        'loggedAppUser', JSON.stringify(user)
       )
 
       blogService.setToken(user.token)
