@@ -9,7 +9,6 @@ import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [newBlog, setNewBlog] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -34,14 +33,15 @@ const App = () => {
     }
   }, [])
 
-  const addBlog = blogObject => {
-    blogFormRef.current.toggleVisibility()
-    blogService
-      .create(blogObject)
-      .then(returnedBlog => {
-        setBlogs([...blogs, returnedBlog])
-        setNewBlog('')
-      })
+  const addBlog = async blogObject => {
+    try {
+      blogFormRef.current.toggleVisibility()
+      const newBlog = await blogService.createBlog(blogObject)
+      setBlogs([...blogs, newBlog])
+    } catch (error) {
+      console.log(error)
+    }
+
   }
 
   const handleLogin = async (event) => {
