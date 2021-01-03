@@ -39,7 +39,10 @@ const App = () => {
       const newBlog = await blogService.create(blogObject)
       setBlogs([...blogs, newBlog])
     } catch (error) {
-      console.log(error)
+      setErrorMessage('error adding blog')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     }
   }
 
