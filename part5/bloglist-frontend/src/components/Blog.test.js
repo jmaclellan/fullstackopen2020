@@ -8,7 +8,6 @@ test('renders content', () => {
     url: 'test.com',
     title: 'My Sample Blog',
     author: 'Albert Einstein',
-    likes: 500,
   }
 
   const component = render(
