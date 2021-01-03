@@ -69,6 +69,19 @@ const App = () => {
     }
   }
 
+  const handleLogout = async (event) => {
+    event.preventDefault()
+    try {
+      window.localStorage.removeItem('loggedAppUser')
+      setUser(null)
+    } catch (exception) {
+      setErrorMessage('error logging out user')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
   const loginForm = () => (
     <Togglable buttonLabel='login'>
         <LoginForm
@@ -96,6 +109,7 @@ const App = () => {
         <div>
           <p>{user.name} logged in</p>
           {blogForm()}
+          <button onClick={handleLogout}>logout</button>
         </div>
       }
       <ul>
