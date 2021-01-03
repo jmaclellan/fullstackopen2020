@@ -86,6 +86,15 @@ const App = () => {
     </Togglable>
   )
 
+  const logoutButton = () => {
+    return (
+      <>
+        <>{user.name} logged in</>
+        <button onClick={handleLogout}>Logout</button>
+      </>
+    )
+  }
+
   const blogForm = () => (
     <Togglable buttonLabel='new blog' ref={blogFormRef}>
       <BlogForm createBlog={addBlog}/>
@@ -99,9 +108,8 @@ const App = () => {
       {user === null ?
         loginForm() :
         <div>
-          <p>{user.name} logged in</p>
+          {logoutButton()}
           {blogForm()}
-          <button onClick={handleLogout}>logout</button>
         </div>
       }
       <ul>
