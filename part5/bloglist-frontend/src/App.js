@@ -36,12 +36,11 @@ const App = () => {
   const addBlog = async blogObject => {
     try {
       blogFormRef.current.toggleVisibility()
-      const newBlog = await blogService.createBlog(blogObject)
+      const newBlog = await blogService.create(blogObject)
       setBlogs([...blogs, newBlog])
     } catch (error) {
       console.log(error)
     }
-
   }
 
   const handleLogin = async (event) => {
