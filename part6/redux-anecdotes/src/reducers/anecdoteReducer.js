@@ -17,9 +17,9 @@ const asObject = (anecdote) => {
   }
 }
 
-export const createAncedote = (content) => {
+export const createAnecdote = (content) => {
   return {
-    type: 'NEW_ANCEDOTE',
+    type: 'NEW_ANECDOTE',
     data: {
       content,
       id: getId(),

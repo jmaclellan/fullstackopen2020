@@ -1,5 +1,5 @@
 import React from 'react'
-import { createAncedote } from './reducers/anecdoteReducer'
+import { createAnecdote } from './reducers/anecdoteReducer'
 import { useSelector, useDispatch } from 'react-redux'
 
 const App = () => {
@@ -10,7 +10,7 @@ const App = () => {
     event.preventDefault()
     const content = event.target.ancedote.value
     event.target.ancedote.value = ''
-    dispatch(createAncedote(content))
+    dispatch(createAnecdote(content))
   }
 
   const vote = (id) => {
