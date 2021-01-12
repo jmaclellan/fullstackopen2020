@@ -54,7 +54,6 @@ describe('Blog list app', function() {
         cy.createNote({ content: 'first note', important: false })
         cy.createNote({ content: 'second note', important: false })
         cy.createNote({ content: 'third note', important: false })
-        cy.
       })
 
       it('it can be made important', function () {
