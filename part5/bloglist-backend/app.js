@@ -26,8 +26,14 @@ app.use(express.json())
 
 app.use(middleware.tokenExtractor)
 
+app.use('/api/login', loginRouter)
 app.use('/api/user', usersRouter)
 app.use('/api/blogs', blogsRouter)
-app.use('/api/login', loginRouter)
+
+if (process.env.NODE_ENV === 'test') {
+  // eslint-disable-next-line global-require
+  const testingRouter = require('./controllers/testing')
+  app.use('/api/testing', testingRouter)
+}
 
 module.exports = app
