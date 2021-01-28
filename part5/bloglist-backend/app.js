@@ -8,6 +8,7 @@ const middleware = require('./utils/middleware')
 const usersRouter = require('./controllers/users')
 const blogsRouter = require('./controllers/blogs')
 const loginRouter = require('./controllers/login')
+const testingRouter = require('./controllers/testing')
 
 mongoose
   .connect(config.MONGODB_URI, {
@@ -31,8 +32,6 @@ app.use('/api/user', usersRouter)
 app.use('/api/blogs', blogsRouter)
 
 if (process.env.NODE_ENV === 'test') {
-  // eslint-disable-next-line global-require
-  const testingRouter = require('./controllers/testing')
   app.use('/api/testing', testingRouter)
 }
 
