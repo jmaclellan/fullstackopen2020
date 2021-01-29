@@ -55,9 +55,9 @@ describe('Blog list app', function() {
 
     describe('and a blog exists', function () {
       beforeEach(function () {
-        cy.createNote({ content: 'first note', important: false })
-        cy.createNote({ content: 'second note', important: false })
-        cy.createNote({ content: 'third note', important: false })
+        cy.createBlog({ name: 'Joe Smith', url: 'test123.com', likes: 1, title: 'Bloggy McBlogface' })
+        cy.createBlog({ name: 'John Wayne', url: 'wayneindustries.com', likes: 12, title: 'John Wayne stuff' })
+        cy.createBlog({ name: 'Tom Brady', url: 'tb12.com', likes: 55, title: 'TB 12 Method'})
       })
 
       it('it can be made important', function () {
