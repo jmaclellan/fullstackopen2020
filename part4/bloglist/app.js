@@ -30,4 +30,7 @@ app.use('/api/user', usersRouter)
 app.use('/api/blogs', blogsRouter)
 app.use('/api/login', loginRouter)
 
+app.use(middleware.unknownEndpoint)
+app.use(middleware.errorHandler)
+
 module.exports = app
