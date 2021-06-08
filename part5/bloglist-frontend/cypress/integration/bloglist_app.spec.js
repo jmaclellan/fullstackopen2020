@@ -34,12 +34,7 @@ describe('Blog list app', function() {
       cy.get('#password').type('wrong')
       cy.get('#login-button').click()
 
-      cy.get('.error')
-        .should('contain', 'wrong credentials')
-        .and('have.css', 'color', 'rgb(255, 0, 0)')
-        .and('have.css', 'border-style', 'solid')
-
-      cy.get('html').should('not.contain', 'Tiger Woods logged in')
+      cy.contains('wrong username/password').should('have.css', 'color', 'rgb(255, 0, 0)')
     })
   })
 
@@ -50,10 +45,13 @@ describe('Blog list app', function() {
 
     it('a new blog can be created', function() {
       cy.contains('new blog').click()
-      cy.get('input').type('a blog created by cypress')
-      cy.contains('save').click()
+      cy.get('#author').type('Dan Abramov')
+      cy.get('#title').type('random blog post')
+      cy.get('#url').type('example.com')
+      cy.get('#create').click()
 
-      cy.contains('a blog created by cypress')
+      cy.contains('random blog post')
+      cy.contains('Dan Abramov')
     })
 
     describe('and a blog exists', function () {
