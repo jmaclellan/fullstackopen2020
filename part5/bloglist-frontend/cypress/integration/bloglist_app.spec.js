@@ -30,7 +30,6 @@ describe('Blog list app', function() {
     })
 
     it('fails with wrong credentials', function() {
-      cy.contains('login').click()
       cy.get('#username').type('twoods')
       cy.get('#password').type('wrong')
       cy.get('#login-button').click()
