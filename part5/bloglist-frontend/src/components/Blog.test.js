@@ -20,3 +20,25 @@ test('Blog component renders correctly', () => {
   expect(component.container).not.toHaveTextContent(blog.likes)
   expect(component.container).not.toHaveTextContent(blog.url)
 })
+
+test('renders url and likes when expanded', () => {
+  const blog = {
+    url: 'test.com',
+    title: 'My Sample Blog',
+    author: 'Albert Einstein',
+    like: 0,
+    user: {
+      name: 'Jack Black'
+    }
+  }
+
+  const component = render(
+    <Blog blog={blog} {...other} />
+  )
+
+  const viewButton = component.getByText('view')
+  fireEvent.click(viewButton)
+
+  expect(component.container).toHaveTextContent(blog.url)
+  expect(component.container).toHaveTextContent(`likes ${blog.likes}`)
+})
