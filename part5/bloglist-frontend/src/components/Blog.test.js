@@ -42,3 +42,30 @@ test('renders url and likes when expanded', () => {
   expect(component.container).toHaveTextContent(blog.url)
   expect(component.container).toHaveTextContent(`likes ${blog.likes}`)
 })
+
+test('when liked twice, the event handler gets called twice', () => {
+  const blog = {
+    url: 'test.com',
+    title: 'My Sample Blog',
+    author: 'Albert Einstein',
+    like: 0,
+    user: {
+      name: 'Jack Black'
+    }
+  }
+
+  other.handleLike = jest.fn()
+
+  const component = render(
+    <Blog blog={blog} {...other} />
+  )
+
+  const viewButton = component.getByText('view')
+  fireEvent.click(viewButton)
+
+  const likeButton = component.getByText('like')
+  fireEvent.click(likeButton)
+  fireEvent.click(likeButton)
+
+  expect(other.handleLike.mock.calls.length).toBe(2)
+})
