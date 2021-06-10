@@ -1,10 +1,16 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+
 
 const AnecdoteForm = () => {
   return (
-    <form>
-      <h1>anecdote form here</h1>
-    </form>
+    <>
+      <h2>create new</h2>
+      <form>
+        <div><input /></div>
+        <button>create</button>
+      </form>
+    </>
   )
 }
 
