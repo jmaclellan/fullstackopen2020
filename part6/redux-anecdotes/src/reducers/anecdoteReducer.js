@@ -21,18 +21,10 @@ const initialState = anecdotesAtStart.map(asObject)
 
 const reducer = (state = initialState, action) => {
   switch(action.type) {
+    case 'NEW_ANECDOTE':
+      return [...state, action.data]
     case 'INCREMENT':
       return [...state, action.vote + 1]
-    // case 'TOGGLE_IMPORTANCE':
-    //   const id = action.data.id
-    //   const noteToChange = state.find(n => n.id === id)
-    //   const changedNote = {
-    //     ...noteToChange,
-    //     important: !noteToChange.important
-    //   }
-    //   return state.map(note =>
-    //     note.id !== id ? note : changedNote
-    //   )
     default:
       return state
   }
