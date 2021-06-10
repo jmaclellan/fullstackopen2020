@@ -22,7 +22,7 @@ const initialState = anecdotesAtStart.map(asObject)
 const reducer = (state = initialState, action) => {
   switch(action.type) {
     case 'INCREMENT':
-      return [...state, action.data]
+      return [...state, action.vote + 1]
     // case 'TOGGLE_IMPORTANCE':
     //   const id = action.data.id
     //   const noteToChange = state.find(n => n.id === id)
@@ -35,6 +35,16 @@ const reducer = (state = initialState, action) => {
     //   )
     default:
       return state
+  }
+}
+
+export const createAnecdote = (content) => {
+  return {
+    type: 'NEW_ANECDOTE',
+    data: {
+      content,
+      id: getId()
+    }
   }
 }
 
