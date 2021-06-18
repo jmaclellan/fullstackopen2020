@@ -15,9 +15,9 @@ const Menu = () => {
   }
   return (
     <div>
-      <Link href='#' style={padding}>anecdotes</Link>
-      <Link href='#' style={padding}>create new</Link>
-      <Link href='#' style={padding}>about</Link>
+      <Link to='/' style={padding}>anecdotes</Link>
+      <Link to='/create' style={padding}>create new</Link>
+      <Link to='about' style={padding}>about</Link>
     </div>
   )
 }
@@ -135,9 +135,17 @@ const App = () => {
     <div>
       <h1>Software anecdotes</h1>
       <Menu />
-      <AnecdoteList anecdotes={anecdotes} />
-      <About />
-      <CreateNew addNew={addNew} />
+      <Switch>
+        <Route path='/create'>
+          <CreateNew addNew={addNew} />
+        </Route>
+        <Route path='/about'>
+          <About />
+        </Route>
+        <Route path='/'>
+         <AnecdoteList anecdotes={anecdotes} />
+        </Route>
+      </Switch>
       <Footer />
     </div>
   )
