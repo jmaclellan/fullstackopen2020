@@ -23,12 +23,7 @@ const AnecdoteForm = (props) => {
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-      filter: state.filter,
-  }
-}
-
-const mapDispatchToProps = { createAnecdote, setNotification }
-
-export default connect(mapStateToProps, mapDispatchToProps)(AnecdoteForm)
+export default connect(
+  null,
+  { createAnecdote, setNotification }
+)(AnecdoteForm)
