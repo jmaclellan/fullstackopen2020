@@ -1,4 +1,13 @@
 import React, { useState } from 'react'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+  useRouteMatch,
+  useHistory,
+} from 'react-router-dom'
 
 const Menu = () => {
   const padding = {
@@ -6,9 +15,9 @@ const Menu = () => {
   }
   return (
     <div>
-      <a href='#' style={padding}>anecdotes</a>
-      <a href='#' style={padding}>create new</a>
-      <a href='#' style={padding}>about</a>
+      <Link href='#' style={padding}>anecdotes</Link>
+      <Link href='#' style={padding}>create new</Link>
+      <Link href='#' style={padding}>about</Link>
     </div>
   )
 }
