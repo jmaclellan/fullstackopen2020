@@ -151,7 +151,7 @@ const App = () => {
       <h1>Software anecdotes</h1>
       <Menu />
       <Switch>
-        <Route path="/anecdotes/:id">
+        <Route path='/anecdotes/:id'>
           <Anecdote anecdote={anecdotes} />
         </Route>
         <Route path='/create'>
