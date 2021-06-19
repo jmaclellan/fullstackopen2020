@@ -22,11 +22,26 @@ const Menu = () => {
   )
 }
 
+const Anecdote = ({ anecdote }) => {
+  return (
+    <div>
+      <h2>{anecdote.content}</h2>
+      <p>{anecdote.author}</p>
+      <p>{anecdote.votes}</p>
+    </div>
+  )
+}
+
+
 const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
     <ul>
-      {anecdotes.map(anecdote => <li key={anecdote.id} >{anecdote.content}</li>)}
+      {anecdotes.map(anecdote =>
+          <li key={anecdote.id} >
+            <Link to={`/anecdotes/${anecdotes.id}`}>{anecdote.content}</Link>
+          </li>
+        )}
     </ul>
   </div>
 )
@@ -136,6 +151,9 @@ const App = () => {
       <h1>Software anecdotes</h1>
       <Menu />
       <Switch>
+        <Route path="/anecdotes/:id">
+          <Anecdote anecdote={anecdotes} />
+        </Route>
         <Route path='/create'>
           <CreateNew addNew={addNew} />
         </Route>

@@ -3,13 +3,13 @@ import { createAnecdote } from '../reducers/anecdoteReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
 
-const AnecdoteForm = (props) => {
+const AnecdoteForm = ({ createAnecdote, setNotification }) => {
   const addAnecdote = async event => {
     event.preventDefault()
     const content = event.target.anecdote.value
     event.target.anecdote.value = ''
-    props.createAnecdote(content)
-    props.setNotification(`new anecdote '${content}'`, 5)
+    createAnecdote(content)
+    setNotification(`new anecdote '${content}'`, 5)
   }
 
   return (

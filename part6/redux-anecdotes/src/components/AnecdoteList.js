@@ -5,10 +5,8 @@ import { setNotification } from '../reducers/notificationReducer'
 
 const AnecdoteList = () => {
   const anecdotes = useSelector(state => {
-    console.log('state', state)
     const filter = state.filter.toLowerCase()
-    return state.anecdotes
-    // return state.anecdotes.filter(a => a.content.toLowerCase().includes(filter))
+    return state.anecdotes.filter(a => a.content.toLowerCase().includes(filter))
   })
 
   const dispatch = useDispatch()
