@@ -4,10 +4,7 @@ import {
   Switch,
   Route,
   Link,
-  Redirect,
-  useRouteMatch,
-  useHistory,
-  useParams
+  useRouteMatch
 } from 'react-router-dom'
 
 const Menu = () => {
