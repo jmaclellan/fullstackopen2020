@@ -7,6 +7,7 @@ import {
   Redirect,
   useRouteMatch,
   useHistory,
+  useParams
 } from 'react-router-dom'
 
 const Menu = () => {
@@ -17,18 +18,18 @@ const Menu = () => {
     <div>
       <Link to='/' style={padding}>anecdotes</Link>
       <Link to='/create' style={padding}>create new</Link>
-      <Link to='about' style={padding}>about</Link>
+      <Link to='/about' style={padding}>about</Link>
     </div>
   )
 }
 
 const Anecdote = ({ anecdote }) => {
   return (
-    <div>
-      <h2>{anecdote.content}</h2>
-      <p>{anecdote.author}</p>
-      <p>{anecdote.votes}</p>
-    </div>
+    <>
+      <h1>{anecdote.content}</h1>
+      <p>has {anecdote.votes} votes</p>
+      <p>for more info see <a href={anecdote.info}>{anecdote.info}</a></p>
+    </>
   )
 }
 
@@ -39,7 +40,7 @@ const AnecdoteList = ({ anecdotes }) => (
     <ul>
       {anecdotes.map(anecdote =>
           <li key={anecdote.id} >
-            <Link to={`/anecdotes/${anecdotes.id}`}>{anecdote.content}</Link>
+            <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
           </li>
         )}
     </ul>
@@ -129,6 +130,8 @@ const App = () => {
 
   const addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
+    setNotification(`a new anecdote ${anecdote.content} created! `)
+    setTimeout(() => setNotification(''), 10000);
     setAnecdotes(anecdotes.concat(anecdote))
   }
 
@@ -146,13 +149,19 @@ const App = () => {
     setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
   }
 
+  const anecdoteIdMatch = useRouteMatch('/anecdotes/:id')
+  const anecdote = anecdoteIdMatch
+    ? anecdoteById(anecdoteIdMatch.params.id)
+    : null
+
+
   return (
     <div>
       <h1>Software anecdotes</h1>
       <Menu />
       <Switch>
         <Route path='/anecdotes/:id'>
-          <Anecdote anecdotes={anecdotes} />
+          <Anecdote anecdote={anecdote} />
         </Route>
         <Route path='/create'>
           <CreateNew addNew={addNew} />
@@ -164,9 +173,10 @@ const App = () => {
          <AnecdoteList anecdotes={anecdotes} />
         </Route>
       </Switch>
+      <div>{notification}</div>
       <Footer />
     </div>
   )
 }
 
-export default App;
+export default App
