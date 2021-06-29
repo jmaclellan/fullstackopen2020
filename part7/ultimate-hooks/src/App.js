@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react'
 import { useField, useResource } from './hooks'
-import axios from 'axios'
 
 const App = () => {
   const content = useField('text')
