@@ -109,6 +109,15 @@ const typeDefs = gql`
     allBooks(author: String, genre: String): [Book!]!
     allAuthors: [Author!]!
   }
+
+  type Mutation {
+    addBook(
+      title: String!
+      author: String!
+      published: Int!
+      genres: [String!]!
+    ): Book
+  }
 `;
 
 const resolvers = {
@@ -120,6 +129,11 @@ const resolvers = {
     },
     allAuthors: () => authors,
   },
+  Mutation: {
+    addBook: (root, args) => {
+      books.concat({...args})
+    }
+  }
 };
 
 const server = new ApolloServer({
