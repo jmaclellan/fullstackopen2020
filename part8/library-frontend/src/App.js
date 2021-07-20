@@ -7,8 +7,7 @@ import { ALL_AUTHORS } from './queries'
 
 const App = () => {
   const [page, setPage] = useState('authors')
-  const result = useQuery(ALL_AUTHORS)
-  console.log(result)
+  const authors = useQuery(ALL_AUTHORS)
 
   return (
     <div>
@@ -19,7 +18,7 @@ const App = () => {
       </div>
 
       <Authors
-        authors={result.data.allAuthors}
+        authors={authors}
         show={page === 'authors'}
       />
 

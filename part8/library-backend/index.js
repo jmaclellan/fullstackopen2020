@@ -128,9 +128,40 @@ const resolvers = {
     bookCount: () => books.length,
     authorCount: () => authors.length,
     allBooks: (root, args) => {
-      if (!args.author && !args.genre) return books
+      const filterAuthor = book => book.author === args.author
+      const filterGenre = book => book.genres.includes(args.genre)
+      if (args.author && args.genre) {
+        return books.filter(filterAuthor).filter(filterGenre)
+      }
+      if (args.author) {
+        return books.filter(filterAuthor)
+      }
+      if (args.genre) {
+        return books.filter(filterGenre)
+      }
+      return books
     },
-    allAuthors: () => authors,
+    allAuthors: () => {
+      const bookCount = {}
+      for (const author of authors) {
+        bookCount[author.name] = null
+      }
+      for (let book of books) {
+        if (bookCount[book.author] === null) {
+          bookCount[book.author] = 1
+        } else {
+          bookCount[book.author]++
+        }
+      }
+      let result = []
+      for (let i = 0; i < authors.length; i++) {
+        result.push({
+          name: authors[i].name,
+          bookCount: bookCount[authors[i].name]
+        })
+      }
+      return result
+    }
   },
   Mutation: {
     addBook: (root, args) => {
