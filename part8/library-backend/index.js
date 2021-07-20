@@ -100,7 +100,7 @@ const typeDefs = gql`
   type Author {
     name: String!
     id: String!
-    born: Int!
+    born: Int
     bookCount: Int!
   }
 
@@ -157,6 +157,7 @@ const resolvers = {
       for (let i = 0; i < authors.length; i++) {
         result.push({
           name: authors[i].name,
+          born: authors[i].born,
           bookCount: bookCount[authors[i].name]
         })
       }
@@ -167,10 +168,15 @@ const resolvers = {
     addBook: (root, args) => {
       const book = {...args}
       books.concat(book)
+      // see if author is already in system
+      const author = authors.find(author => author.name === args.author)
+      if (author === undefined) {
+        authors.concat(args.author)
+      }
       return book
     },
     editAuthor: (root, args) => {
-      const author = authors.find(a => a.name === args.name)
+      const author = authors.find(author => author.name === args.name)
       if (!author) return null
       const updatedAuthor = {...author, born: args.born}
       authors = authors.map(a => a.name === args.name ? updatedAuthor : a)
