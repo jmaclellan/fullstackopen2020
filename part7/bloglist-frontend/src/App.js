@@ -9,24 +9,21 @@ import { initializeBlogs } from './reducers/blogReducer'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import storage from './utils/storage'
+import { initializeUsers } from './reducers/userReducer'
 
 const App = () => {
   const dispatch = useDispatch()
-  const notification = useSelector(state => state.notification)
   const blogs = useSelector(state => state.blogs)
   const user = useSelector(state => state.user)
+  const notification = useSelector(state => state.notification)
   const [password, setPassword] = useState('')
 
   const blogFormRef = React.createRef()
 
   useEffect(() => {
     dispatch(initializeBlogs())
+    dispatch(initializeUsers())
   }, [dispatch])
-
-  useEffect(() => {
-    // const user = storage.loadUser()
-    // setUser(user)
-  }, [])
 
   const notifyWith = (message, type='success') => {
     setNotification({
