@@ -1,31 +1,31 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
+import { initializeBlogs } from './reducers/blogReducer'
 
 import blogService from './services/blogs'
 import loginService from './services/login'
 import storage from './utils/storage'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
-  const [user, setUser] = useState(null)
-  const [username, setUsername] = useState('')
+  const dispatch = useDispatch()
+  const notification = useSelector(state => state.notification)
+  const blogs = useSelector(state => state.blogs)
+  const user = useSelector(state => state.user)
   const [password, setPassword] = useState('')
-  const [notification, setNotification] = useState(null)
 
   const blogFormRef = React.createRef()
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs(blogs)
-    )
-  }, [])
+    dispatch(initializeBlogs())
+  }, [dispatch])
 
   useEffect(() => {
-    const user = storage.loadUser()
-    setUser(user)
+    // const user = storage.loadUser()
+    // setUser(user)
   }, [])
 
   const notifyWith = (message, type='success') => {
