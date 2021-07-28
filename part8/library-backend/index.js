@@ -1,4 +1,5 @@
-const { ApolloServer, gql } = require('apollo-server');
+const { ApolloServer, gql } = require('apollo-server')
+const mongoose = require('mongoose')
 
 let authors = [
   {
@@ -86,7 +87,15 @@ const books = [
     id: 'afa5de04-344d-11e9-a414-719c6709cf3e',
     genres: ['classic', 'revolution'],
   },
-];
+]
+
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+.then(() => {
+  console.log('connected to MongoDB')
+})
+.catch((error) => {
+  console.log('error connection to MongoDB:', error.message)
+})
 
 const typeDefs = gql`
   type Book {
