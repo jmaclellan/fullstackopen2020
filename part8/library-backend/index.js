@@ -89,13 +89,14 @@ const books = [
   },
 ]
 
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
-.then(() => {
-  console.log('connected to MongoDB')
-})
-.catch((error) => {
-  console.log('error connection to MongoDB:', error.message)
-})
+mongoose.connect(process.env.MONGODB_URI,
+    { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+  .then(() => {
+    console.log('connected to MongoDB')
+  })
+  .catch((error) => {
+    console.log('error connection to MongoDB:', error.message)
+  })
 
 const typeDefs = gql`
   type Book {
@@ -134,8 +135,8 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    bookCount: () => books.length,
-    authorCount: () => authors.length,
+    bookCount: () => Book.collection.countDocuments(),
+    authorCount: () => Author.collection.countDocuments(),
     allBooks: (root, args) => {
       const filterAuthor = book => book.author === args.author
       const filterGenre = book => book.genres.includes(args.genre)
