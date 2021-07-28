@@ -138,8 +138,14 @@ const typeDefs = gql`
       published: Int!
       genres: [String!]!
     ): Book
-
     editAuthor(name: String!, setBornTo: Int!): Author
+    createUser(
+      username: String!
+    ): User
+    login(
+      username: String!
+      password: String!
+    ): Token
   }
 `;
 
