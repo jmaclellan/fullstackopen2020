@@ -1,5 +1,6 @@
-const { ApolloServer, gql } = require('apollo-server')
+const { ApolloServer, gql, UserInputError } = require('apollo-server')
 const mongoose = require('mongoose')
+const jwt = require('jsonwebtoken')
 
 let authors = [
   {
@@ -218,15 +219,40 @@ const resolvers = {
       const updatedAuthor = {...author, born: args.born}
       authors = authors.map(a => a.name === args.name ? updatedAuthor : a)
       return updatedAuthor
+      }
+    },
+    createUser: (root, args) => {
+      const user = new User({ username: args.username })
+
+      return user.save()
+        .catch(error => {
+          throw new UserInputError(error.message, {
+            invalidArgs: args
+          })
+        })
+    },
+    login: async (root, args) => {
+      const user = await User.findOne({ username: args.username })
+
+      if ( !user || args.password !== password) {
+        throw new UserInputError('wrong credentials')
+      }
+
+      const userForToken = {
+        username: user.username,
+        id: user._id
+      }
+
+      return { value: jwt.sign(userForToken, process.env.JWT_SECRET)}
     }
   }
-};
+}
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-});
+})
 
 server.listen().then(({ url }) => {
   console.log(`Server ready at ${url}`);
-});
+})
