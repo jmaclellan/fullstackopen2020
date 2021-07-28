@@ -102,9 +102,9 @@ const typeDefs = gql`
   type Book {
     title: String!
     published: Int!
-    author: String!
-    id: String!
+    author: Author!
     genres: [String!]!
+    id: ID!
   }
 
   type Author {
@@ -112,6 +112,16 @@ const typeDefs = gql`
     id: String!
     born: Int
     bookCount: Int!
+  }
+
+  type User {
+    username: String!
+    friends: [Person!]!
+    id: ID!
+  }
+
+  type Token {
+    value: String!
   }
 
   type Query {
@@ -137,20 +147,31 @@ const resolvers = {
   Query: {
     bookCount: () => Book.collection.countDocuments(),
     authorCount: () => Author.collection.countDocuments(),
+    // return all books with optional filters of author and
+    // or genre passed as arg => return Book array
     allBooks: (root, args) => {
-      const filterAuthor = book => book.author === args.author
-      const filterGenre = book => book.genres.includes(args.genre)
-      if (args.author && args.genre) {
-        return books.filter(filterAuthor).filter(filterGenre)
-      }
+      // if no filters
+      if (!args.author && !args.genre) return Book.find({})
       if (args.author) {
-        return books.filter(filterAuthor)
+        const foundAuthor = Book.findOne({author: args.author})
+        if (foundAuthor && args.genre) {
+          Book.find({genre: args.genre})
+        }
+
       }
-      if (args.genre) {
-        return books.filter(filterGenre)
-      }
-      return books
-    },
+    //   const filterAuthor = book => book.author === args.author
+    //   const filterGenre = book => book.genres.includes(args.genre)
+    //   if (args.author && args.genre) {
+    //     return books.filter(filterAuthor).filter(filterGenre)
+    //   }
+    //   if (args.author) {
+    //     return books.filter(filterAuthor)
+    //   }
+    //   if (args.genre) {
+    //     return books.filter(filterGenre)
+    //   }
+    //   return books
+    // },
     allAuthors: () => {
       const bookCount = {}
       for (const author of authors) {
