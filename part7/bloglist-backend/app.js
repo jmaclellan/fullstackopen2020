@@ -35,4 +35,6 @@ if (process.env.NODE_ENV === 'test') {
   app.use('/api/testing', testingRouter)
 }
 
+app.use(middleware.errorHandler)
+
 module.exports = app
