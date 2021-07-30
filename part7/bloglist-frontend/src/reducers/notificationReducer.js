@@ -11,11 +11,14 @@ const reducer = (state = null, action) => {
 
 let timeoutId
 
-export const setNotification = (content, time) => {
+export const setNotification = (content, type = 'success') => {
   return async dispatch => {
     dispatch({
       type: 'SET_NOTIFICATION',
-      content
+      payload: {
+        message,
+        type
+      }
     })
 
     if (timeoutId) {
@@ -26,7 +29,7 @@ export const setNotification = (content, time) => {
       dispatch({
         type: 'CLEAR_NOTIFICATION'
       })
-    }, time * 1000)
+    }, 5000)
   }
 }
 

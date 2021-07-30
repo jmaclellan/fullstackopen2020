@@ -4,18 +4,28 @@ const blogReducer = (state = [], action) => {
   switch(action.type) {
     case 'INIT':
       return action.data
-    case 'ADD_BLOG':
+    case 'CREATE':
       return [...state, action.data]
-    case 'DELETE_BLOG':
+    case 'DELETE':
       return state.filter(blog => blog.id !== action.id)
-    case 'LIKE_BLOG':
+    case 'LIKE':
       const liked = action.data
-      return state.map(blog => blog.id === liked.id ? {...blog, likes: liked.likes}  : blog)
+      return state.map(blog => blog.id === liked.id ? liked : blog)
     case 'COMMENT':
-      // to do
-      return state
+      const commented = action.data
+      return state.map(b => b.id === commented.id ? commented : b)
     default:
       return state
+  }
+}
+
+export const createBlog = content => {
+  return async dispatch => {
+    const data = await blogService.create(content)
+    dispatch({
+      type: 'CREATE',
+      data
+    })
   }
 }
 
@@ -29,90 +39,35 @@ export const initializeBlogs = () => {
   }
 }
 
-export const addBlog = (content) => {
+export const likeBlog = blog => {
   return async dispatch => {
-    const data = await blogService.create(content)
+    const toLike = {...blog, likes: blog.likes + 1}
+    const data = await blogService.update(toLike)
     dispatch({
-      type: 'ADD_BLOG',
+      type: 'LIKE',
       data
     })
   }
 }
 
-export const likeBlog = (anecdote) => {
+export const removeBlog = id => {
   return async dispatch => {
-    await blogService.update({id, likes})
+    await blogService.remove(id)
     dispatch({
-      type: 'LIKE_BLOG',
-      data : {
-        id,
-        likes
-      }
+      type: 'DELETE',
+      id
     })
   }
 }
 
-export const deleteBlog = id => {
+export const commentBlog = (id, comment) => {
   return async dispatch => {
-    await blogService.remove({ id })
+    const data = await blogService.comment(id, comment)
     dispatch({
-      type: 'DELETE_BLOG',
-      data: {
-        id
-      }
+      type: 'COMMENT',
+      data
     })
   }
 }
 
 export default blogReducer
-
-// import anecdoteService from '../services/anecdotes'
-
-// const byVotes = (a1, a2) => a2.votes - a1.votes
-
-// const reducer = (state = [], action) => {
-//   switch (action.type) {
-//     case 'INIT':
-//       return action.data.sort(byVotes)
-//     case 'VOTE':
-//       const voted = action.data
-//       return state.map(a => a.id===voted.id ? voted : a).sort(byVotes)
-//     case 'CREATE':
-//       return [...state, action.data]
-//     default:
-//       return state
-//   }
-// }
-
-// export const createAnecdote = (content) => {
-//   return async dispatch => {
-//     const data = await anecdoteService.createNew(content)
-//     dispatch({
-//       type: 'CREATE',
-//       data
-//     })
-//   }
-// }
-
-// export const initializeAnecdotes = () => {
-//   return async dispatch => {
-//     const data = await anecdoteService.getAll()
-//     dispatch({
-//       type: 'INIT',
-//       data
-//     })
-//   }
-// }
-
-// export const voteAnecdote = (anecdote) => {
-//   return async dispatch => {
-//     const toVote = {...anecdote, votes: anecdote.votes + 1 }
-//     const data = await anecdoteService.update(toVote)
-//     dispatch({
-//       type: 'VOTE',
-//       data
-//     })
-//   }
-// }
-
-// export default reducer

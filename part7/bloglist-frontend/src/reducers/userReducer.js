@@ -1,22 +1,18 @@
-import userService from '../services/users'
-
-const userReducer = (state = [], action) => {
-  switch(action.type) {
-    case 'INIT_USERS':
-      return action.data
-    default:
-      return state
+const reducer = (state = null, action) => {
+  if (action.type === 'LOGIN') {
+    return action.payload
   }
+  if (action.type === 'LOGOUT') return null
+  return state
 }
 
-export const initializeUsers = () => {
-  return async dispatch => {
-    const data = await userService.getAll()
-    dispatch({
-      type: 'INIT_USERS',
-      data
-    })
+export const login = user => (
+  {
+    type: 'LOGIN',
+    payload: user
   }
-}
+)
+
+export const logout = () => { type: 'LOGOUT' }
 
 export default userReducer
