@@ -11,14 +11,6 @@ const Blog = () => {
   const dispatch = useDispatch()
   const history = useHistory()
 
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5
-  }
-
   if (!blog) return null
 
   const own = user && user.username === blog.user.username
@@ -40,7 +32,7 @@ const Blog = () => {
   }
 
   return (
-    <div style={blogStyle} className='blog'>
+    <div className='blog'>
       <h3>{blog.title} by {blog.author}</h3>
       <div>
         <div><a href={blog.ur}>{blog.url}</a></div>
