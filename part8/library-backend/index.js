@@ -1,4 +1,4 @@
-const { ApolloServer, gql, UserInputError } = require('apollo-server')
+const { ApolloServer, gql, UserInputError, AuthenticationError } = require('apollo-server')
 const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
 
@@ -107,14 +107,24 @@ const resolvers = {
         })
       }
       return result
+    },
+    me: (root, args, context) => {
+      return context.currentUser
     }
   },
   Mutation: {
-    addBook: (root, args) => {
+    addBook: async (root, args) => {
       const book = new Book({...args})
+      const currentUser = context.currentUser
+
+      // if no logged in user, throw error
+      if (!currentUser) {
+        throw new AuthenticationError('not authenticated')
+      }
 
       try {
         await book.save()
+        currentUser.books = currentUser.books.concat(book)
       } catch (error) {
         throw new UserInputError(error.message, {
           invalidArgs: args
@@ -129,7 +139,7 @@ const resolvers = {
       }
     },
     createUser: (root, args) => {
-      const user = new User({ username: args.username })
+      const user = new User({ username: args.username,  favoriteGenre: args.favoriteGenre })
 
       return user.save()
         .catch(error => {
@@ -141,7 +151,7 @@ const resolvers = {
     login: async (root, args) => {
       const user = await User.findOne({ username: args.username })
 
-      if ( !user || args.password !== process.env.PASSWORD) {
+      if ( !user || args.password !== 'secret') {
         throw new UserInputError('wrong credentials')
       }
 
@@ -164,7 +174,7 @@ const server = new ApolloServer({
       const decodedToken = jwt.verify(
         auth.substring(7), process.env.JWT_SECRET
       )
-      const currentUser = await User.findById(decodedToken.id)
+      const currentUser = await User.findById(decodedToken.id).populate('books')
       return { currentUser }
     }
   }
