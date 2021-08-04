@@ -111,12 +111,14 @@ const resolvers = {
   },
   Mutation: {
     addBook: (root, args) => {
-      const book = {...args}
-      books.concat(book)
-      // see if author is already in system
-      const author = authors.find(author => author.name === args.author)
-      if (author === undefined) {
-        authors.concat(args.author)
+      const book = new Book({...args})
+
+      try {
+        await book.save()
+      } catch (error) {
+        throw new UserInputError(error.message, {
+          invalidArgs: args
+        })
       }
       return book
     },
