@@ -122,12 +122,10 @@ const resolvers = {
       }
       return book
     },
-    editAuthor: (root, args) => {
-      const author = authors.find(author => author.name === args.name)
-      if (!author) return null
-      const updatedAuthor = {...author, born: args.born}
-      authors = authors.map(a => a.name === args.name ? updatedAuthor : a)
-      return updatedAuthor
+    editAuthor: async (root, args) => {
+      const author = await Author.findOne({ name: args.name })
+      author.born = args.born
+      return author.save()
       }
     },
     createUser: (root, args) => {
