@@ -4,17 +4,25 @@ import Books from './components/Books'
 import NewBook from './components/NewBook'
 import Notify from './components/Notify'
 import LoginForm from './components/LoginForm'
+import { useApolloClient } from '@apollo/client'
 
 const App = () => {
   const [page, setPage] = useState('authors')
   const [errorMessage, setErrorMessage] = useState(null)
   const [token, setToken] = useState(null)
+  const client = useApolloClient()
 
   const notify = (message) => {
     setErrorMessage(message)
     setTimeout(() => {
       setErrorMessage(null)
     }, 5000)
+  }
+
+  const logout = () => {
+    setToken(null)
+    localStorage.clear()
+    client.resetStore()
   }
 
   if (!token) {
@@ -37,20 +45,22 @@ const App = () => {
         <button onClick={() => setPage('books')}>books</button>
         <button onClick={() => setPage('add')}>add book</button>
       </div>
-      <Notify errorMessage={errorMessage} />
+      <button onClick={logout}>
+        Logout
+      </button>
+      <Notify
+        errorMessage={errorMessage}
+      />
       <Authors
         setError={notify}
         show={page === 'authors'}
       />
-
       <Books
         show={page === 'books'}
       />
-
       <NewBook
         show={page === 'add'}
       />
-
     </div>
   )
 }
