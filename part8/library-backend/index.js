@@ -1,8 +1,11 @@
-const { ApolloServer, gql, UserInputError, AuthenticationError } = require('apollo-server')
-const mongoose = require('mongoose')
-const jwt = require('jsonwebtoken')
+import { ApolloServer, gql, UserInputError, AuthenticationError } from 'apollo-server'
+import { connect } from 'mongoose'
+import { sign, verify } from 'jsonwebtoken'
+import Book from './models/book'
+import Author from './models/author'
+import User from './models/user'
 
-mongoose.connect(process.env.MONGODB_URI,
+connect(process.env.MONGODB_URI,
     { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
   .then(() => {
     console.log('connected to MongoDB')
@@ -22,7 +25,7 @@ const typeDefs = gql`
 
   type Author {
     name: String!
-    id: String!
+    id: ID!
     born: Int
     bookCount: Int!
   }
@@ -160,7 +163,7 @@ const resolvers = {
         id: user._id
       }
 
-      return { value: jwt.sign(userForToken, process.env.JWT_SECRET)}
+      return { value: sign(userForToken, process.env.JWT_SECRET)}
   }
 }
 
@@ -171,7 +174,7 @@ const server = new ApolloServer({
   context: async ({ reg }) => {
     const auth = req ? req.headers.authorization : null
     if (auth && auth.toLowerCase().startsWith('bearer ')) {
-      const decodedToken = jwt.verify(
+      const decodedToken = verify(
         auth.substring(7), process.env.JWT_SECRET
       )
       const currentUser = await User.findById(decodedToken.id).populate('books')
