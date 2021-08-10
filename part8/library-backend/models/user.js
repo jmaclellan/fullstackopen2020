@@ -8,12 +8,10 @@ const schema = new mongoose.Schema({
     unique: true,
     minlength: 3
   },
-  books: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Book'
-    }
-  ]
+  favoriteGenre: {
+    type: String,
+    required: true,
+  }
 })
 
 schema.plugin(uniqueValidator)
