@@ -1,5 +1,12 @@
 require('dotenv').config()
-const { ApolloServer, gql, UserInputError, AuthenticationError } = require('apollo-server')
+const {
+  ApolloServer,
+  gql,
+  UserInputError,
+  AuthenticationError,
+  PubSub
+} = require('apollo-server')
+const pubsub = new PubSub()
 const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
 const Book = require('./models/book')
@@ -60,6 +67,10 @@ const typeDefs = gql`
     createUser(username: String!, favoriteGenre: String!): User
     login(username: String!, password: String!): Token
   }
+
+  type Subscription {
+    bookAdded: Book!
+  }
 `;
 
 const resolvers = {
@@ -68,9 +79,9 @@ const resolvers = {
     authorCount: () => Author.collection.countDocuments(),
     // return all books with optional filters of author and
     // or genre passed as arg => return Book array
-    allBooks: (root, args) => {
+    allBooks: async (root, args) => {
       // get all books
-      let books = Book.find({}).populate('author')
+      let books = await Book.find({}).populate('author')
       // if no filters
       if (!args.author && !args.genre) return books
       // filter author
