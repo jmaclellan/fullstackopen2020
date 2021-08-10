@@ -95,28 +95,7 @@ const resolvers = {
 
       return books
     },
-    allAuthors: () => {
-      const bookCount = {}
-      for (const author of authors) {
-        bookCount[author.name] = null
-      }
-      for (let book of books) {
-        if (bookCount[book.author] === null) {
-          bookCount[book.author] = 1
-        } else {
-          bookCount[book.author]++
-        }
-      }
-      let result = []
-      for (let i = 0; i < authors.length; i++) {
-        result.push({
-          name: authors[i].name,
-          born: authors[i].born,
-          bookCount: bookCount[authors[i].name]
-        })
-      }
-      return result
-    },
+    allAuthors: () => Author.find({}),
     me: (root, args, context) => {
       return context.currentUser
     }
